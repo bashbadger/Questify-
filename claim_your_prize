@@ -1,0 +1,61 @@
+from kivy.uix.popup import Popup
+from kivy.uix.textinput import TextInput
+
+class PayoutScreen(Screen):
+    def __init__(self, qm, **kwargs):
+        super().__init__(**kwargs)
+        self.qm = qm
+        self.layout = BoxLayout(orientation='vertical', padding=40, spacing=20)
+        
+        # Victory Header
+        self.layout.add_widget(Label(
+            text="CONGRATULATIONS, HERO!", 
+            font_size='28sp', bold=True, color=(1, 0.84, 0, 1)
+        ))
+        self.layout.add_widget(Label(
+            text="You finished in the Top 10 this month.",
+            font_size='16sp'
+        ))
+
+        # Prize Amount
+        self.layout.add_widget(Label(
+            text=f"YOUR REWARD: $145.20", 
+            font_size='40sp', color=(0, 1, 0.5, 1)
+        ))
+
+        # Payment Input
+        self.layout.add_widget(Label(text="Enter PayPal or Venmo ID:", halign='left'))
+        self.payment_id = TextInput(
+            multiline=False, size_hint_y=None, height='50dp',
+            hint_text="e.g. adventurer@email.com"
+        )
+        self.layout.add_widget(self.payment_id)
+
+        # Submit Button
+        btn_claim = Button(
+            text="CLAIM WINNINGS", 
+            size_hint_y=None, height='70dp',
+            background_color=(0, 0.5, 1, 1)
+        )
+        btn_claim.bind(on_press=self.submit_payout)
+        self.layout.add_widget(btn_claim)
+
+        self.add_widget(self.layout)
+
+    def submit_payout(self, instance):
+        payout_address = self.payment_id.text
+        if "@" in payout_address or len(payout_address) > 3:
+            # Logic to send this to your Flask/Stripe backend
+            print(f"Payout of $145.20 queued for {payout_address}")
+            self.show_success_popup()
+        else:
+            self.status_label.text = "Error: Invalid Address"
+
+    def show_success_popup(self):
+        content = BoxLayout(orientation='vertical', padding=10)
+        content.add_widget(Label(text="Quest Complete! Payout in 2-3 days."))
+        btn = Button(text="Awesome!", size_hint_y=None, height='50dp')
+        popup = Popup(title='Funds Locked In', content=content, size_hint=(0.8, 0.4))
+        btn.bind(on_release=popup.dismiss)
+        content.add_widget(btn)
+        popup.open()
