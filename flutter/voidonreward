@@ -1,0 +1,11 @@
+void onAdRewarded() {
+  // 1. Give user their 2x Multiplier
+  user.activateBuff("DoubleXP", duration: Duration(minutes: 30));
+
+  // 2. Increment the Global Jackpot in Firebase
+  final jackpotRef = FirebaseFirestore.instance.collection('global_stats').doc('jackpot');
+  jackpotRef.update({
+    'jackpot_pool': FieldValue.increment(0.01), // Every ad adds 1 cent
+    'total_ads_watched': FieldValue.increment(1),
+  });
+}
