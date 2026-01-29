@@ -1,7 +1,7 @@
-⚔️ Lifequest by Focus Foundry Inc.
+⚔️ Questify by Focus Foundry Inc.
 Forge your focus. Earn your reward.
 
-Lifequest is the flagship application from Focus Foundry Inc. designed to help individuals with ADHD overcome executive dysfunction through gamified incentives and physical verification.
+ Questify is the flagship application from Focus Foundry Inc. designed to help neurodivergent individuals overcome executive dysfunction through gamified incentives and physical verification.
 
 🛠️ The Foundry Stack
 Frontend: Kivy (Python) + Plyer (Sensors)
